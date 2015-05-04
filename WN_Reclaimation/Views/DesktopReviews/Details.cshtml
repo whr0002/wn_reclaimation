@@ -1,0 +1,42 @@
+﻿@model WN_Reclaimation.Models.DesktopReview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DesktopReview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.ClientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.ClientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FacilityType.FacilityTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FacilityType.FacilityTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Site)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Site)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DesktopReviewID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -188,7 +188,6 @@
     <Compile Include="Controllers\AndroidDataController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
-    <Compile Include="Controllers\DesktopReviewsController.cs" />
     <Compile Include="Controllers\FacilityTypesController.cs" />
     <Compile Include="Controllers\FieldDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,13 +205,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505042121592_initial.cs" />
-    <Compile Include="Migrations\201505042121592_initial.Designer.cs">
-      <DependentUpon>201505042121592_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505042124081_initial2.cs" />
-    <Compile Include="Migrations\201505042124081_initial2.Designer.cs">
-      <DependentUpon>201505042124081_initial2.cs</DependentUpon>
+    <Compile Include="Migrations\201505281638470_1.cs" />
+    <Compile Include="Migrations\201505281638470_1.Designer.cs">
+      <DependentUpon>201505281638470_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -275,8 +270,20 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Excel.mdb" />
+    <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\controls.png" />
+    <Content Include="Content\Images\marker_blue.png" />
+    <Content Include="Content\Images\marker_green.png" />
+    <Content Include="Content\Images\marker_grey.png" />
+    <Content Include="Content\Images\marker_orange.png" />
+    <Content Include="Content\Images\marker_purple.png" />
+    <Content Include="Content\Images\Woodlands_icon.jpg" />
+    <Content Include="Content\Logos\scari.png" />
+    <Content Include="Content\map.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -291,7 +298,27 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsPDF\FileSaver.js" />
+    <Content Include="Scripts\jsPDF\jspdf.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.addimage.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.cell.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.from_html.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.ie_below_9_shim.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.javascript.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.sillysvgrenderer.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.split_text_to_size.js" />
+    <Content Include="Scripts\jsPDF\jspdf.plugin.standard_fonts_metrics.js" />
+    <Content Include="Scripts\jsPDF\jspdf.PLUGINTEMPLATE.js" />
+    <Content Include="Scripts\Maps\bootstrap-datepicker.js" />
+    <Content Include="Scripts\Maps\label.js" />
+    <Content Include="Scripts\Maps\layer_controls.js" />
+    <Content Include="Scripts\Maps\map_controls.js" />
+    <Content Include="Scripts\Maps\raw_data.js" />
+    <Content Include="Scripts\Maps\Search.js" />
+    <Content Include="Scripts\Maps\toolbar.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PDFGenerator\Form.js" />
+    <Content Include="Scripts\PDFGenerator\pdfdownloader.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -340,11 +367,6 @@
     <Content Include="Views\Clients\Details.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
-    <Content Include="Views\DesktopReviews\Create.cshtml" />
-    <Content Include="Views\DesktopReviews\Delete.cshtml" />
-    <Content Include="Views\DesktopReviews\Details.cshtml" />
-    <Content Include="Views\DesktopReviews\Edit.cshtml" />
-    <Content Include="Views\DesktopReviews\Index.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\Error_Create.cshtml" />
     <Content Include="Views\ReviewSites\Create.cshtml" />
@@ -352,17 +374,27 @@
     <Content Include="Views\ReviewSites\Details.cshtml" />
     <Content Include="Views\ReviewSites\Edit.cshtml" />
     <Content Include="Views\ReviewSites\Index.cshtml" />
+    <Content Include="Views\QA\Index.cshtml" />
+    <Content Include="Views\QA\ViewContainer.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\ManageUserRoles.cshtml" />
+    <Content Include="Views\DesktopReviews\Create.cshtml" />
+    <Content Include="Views\DesktopReviews\Delete.cshtml" />
+    <Content Include="Views\DesktopReviews\Details.cshtml" />
+    <Content Include="Views\DesktopReviews\Edit.cshtml" />
+    <Content Include="Views\DesktopReviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Content\KML\" />
+    <Folder Include="Controllers\Reclaimation\Report\" />
     <Folder Include="Views\AndroidData\" />
     <Folder Include="Views\Android\" />
     <Folder Include="Views\Data\" />
     <Folder Include="Views\FieldData\" />
     <Folder Include="Views\Kmls\" />
-    <Folder Include="Views\QA\" />
     <Folder Include="Views\RData\" />
-    <Folder Include="Views\Roles\" />
     <Folder Include="Views\SearchTypes\" />
     <Folder Include="Views\SuperAdmin\" />
     <Folder Include="Views\Test\" />
@@ -375,11 +407,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505042121592_initial.resx">
-      <DependentUpon>201505042121592_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505042124081_initial2.resx">
-      <DependentUpon>201505042124081_initial2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505281638470_1.resx">
+      <DependentUpon>201505281638470_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -148,7 +148,7 @@ namespace wn_web.Controllers
 
         //
         // GET: /Account/Register
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [Authorize(Roles = "super admin,admin")]
         public ActionResult Register()
         {
@@ -158,7 +158,7 @@ namespace wn_web.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [Authorize(Roles = "super admin,admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)

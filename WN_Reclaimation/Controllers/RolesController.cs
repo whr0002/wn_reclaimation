@@ -12,7 +12,7 @@ namespace wn_web.Controllers
     /// <summary>
     /// This controller is used for managing user roles
     /// </summary>
-    [Authorize(Roles = "super admin")]
+    //[Authorize(Roles = "super admin")]
     public class RolesController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();

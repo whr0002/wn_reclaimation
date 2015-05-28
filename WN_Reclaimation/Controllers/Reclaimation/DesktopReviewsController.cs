@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using wn_web.Models;
 using wn_web.Models.Reclaimation;
 
-namespace wn_web.Controllers.Reclaimation
+namespace WN_Reclaimation.Controllers.Reclaimation
 {
     public class DesktopReviewsController : Controller
     {
@@ -46,14 +46,6 @@ namespace wn_web.Controllers.Reclaimation
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName");
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName");
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName");
-
-            ViewBag.CountyName = new SelectList(db.Countys, "CountyName", "CountyName");
-            ViewBag.FMAHolderName = new SelectList(db.FMAHolders, "FMAHolderName", "FMAHolderName");
-            ViewBag.NaturalRegionName = new SelectList(db.NaturalRegions, "NaturalRegionName", "NaturalRegionName");
-            ViewBag.NaturalSubRegionName = new SelectList(db.NaturalSubRegions, "NaturalSubRegionName", "NaturalSubRegionName");
-            ViewBag.OperatingAreaName = new SelectList(db.OperatingAreas, "OperatingAreaName", "OperatingAreaName");
-            ViewBag.ProvincialAreaName = new SelectList(db.ProvincialAreas, "ProvincialAreaName", "ProvincialAreaName");
-            ViewBag.ProvincialAreaTypeName = new SelectList(db.ProvincialAreaTypes, "ProvincialAreaTypeName", "ProvincialAreaTypeName");
             return View();
         }
 
@@ -62,31 +54,14 @@ namespace wn_web.Controllers.Reclaimation
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DesktopReviewID,SiteID,FacilityTypeName,Notes,Client,ApprovalStatus,WorkPhase,Occupant,OccupantInfo,Disposition,SoilClass,SoilGroup,ERCBLic,Width,Length,AreaHA,AreaAC,Northing,Easting,Latitude,Longitude,Elevation,AspectName,LSD,SurveyDate,ConstructionDate,SpudDate,AbandonmentDate,ReclamationDate,RelevantCriteriaName,LandscapeName,SoilName,VegetationName,RCADate,RCNumber,DSAComments,Exemptions,AmendDate,AmendDetail,RevegDate,RevegDetail")] DesktopReview desktopReview,
-            [Bind(Include = "AFE,ProvincialAreaName,ProvincialAreaTypeName,OperatingAreaName,CountyName,NaturalRegionName,NaturalSubRegionName,FMAHolderName,SeedZone,WellboreID,UWI,WellsiteName,UTMZone")] ReviewSite reviewSite)
+        public ActionResult Create([Bind(Include = "DesktopReviewID,SiteID,FacilityTypeName,Notes,Client,ApprovalStatus,WorkPhase,Occupant,OccupantInfo,SoilClass,SoilGroup,ERCBLic,Width,Length,AreaHA,AreaAC,Northing,Easting,Latitude,Longitude,Elevation,AspectName,LSD,SurveyDate,ConstructionDate,SpudDate,AbandonmentDate,ReclamationDate,RelevantCriteriaName,LandscapeName,SoilName,VegetationName,RCADate,RCNumber,DSAComments,Exemptions,AmendDate,AmendDetail,RevegDate,RevegDetail")] DesktopReview desktopReview)
         {
-            if (desktopReview != null && desktopReview.SiteID != null && desktopReview.SiteID.Length > 0)
+            if (ModelState.IsValid)
             {
-                reviewSite.ReviewSiteID = desktopReview.SiteID;
-
-                var b = db.ReviewSites.Find(reviewSite.ReviewSiteID);
-                if (b == null)
-                {
-                    db.ReviewSites.Add(reviewSite);
-                    db.SaveChanges();
-                    db.DesktopReviews.Add(desktopReview);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return RedirectToAction("Error_Create", "Error");
-                }
-
-                
-                
+                db.DesktopReviews.Add(desktopReview);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            
 
             ViewBag.FacilityTypeName = new SelectList(db.FacilityTypes, "FacilityTypeName", "FacilityTypeName", desktopReview.FacilityTypeName);
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
@@ -94,16 +69,7 @@ namespace wn_web.Controllers.Reclaimation
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
-
-            ViewBag.CountyName = new SelectList(db.Countys, "CountyName", "CountyName");
-            ViewBag.FMAHolderName = new SelectList(db.FMAHolders, "FMAHolderName", "FMAHolderName");
-            ViewBag.NaturalRegionName = new SelectList(db.NaturalRegions, "NaturalRegionName", "NaturalRegionName");
-            ViewBag.NaturalSubRegionName = new SelectList(db.NaturalSubRegions, "NaturalSubRegionName", "NaturalSubRegionName");
-            ViewBag.OperatingAreaName = new SelectList(db.OperatingAreas, "OperatingAreaName", "OperatingAreaName");
-            ViewBag.ProvincialAreaName = new SelectList(db.ProvincialAreas, "ProvincialAreaName", "ProvincialAreaName");
-            ViewBag.ProvincialAreaTypeName = new SelectList(db.ProvincialAreaTypes, "ProvincialAreaTypeName", "ProvincialAreaTypeName");
             return View(desktopReview);
-
         }
 
         // GET: DesktopReviews/Edit/5
@@ -118,37 +84,12 @@ namespace wn_web.Controllers.Reclaimation
             {
                 return HttpNotFound();
             }
-
-
-            ReviewSite reviewSite = db.ReviewSites.Find(desktopReview.SiteID);
-
-            if (reviewSite == null)
-            {
-                return HttpNotFound();
-            }
-
             ViewBag.FacilityTypeName = new SelectList(db.FacilityTypes, "FacilityTypeName", "FacilityTypeName", desktopReview.FacilityTypeName);
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName", desktopReview.AspectName);
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
-
-            ViewBag.CountyName = new SelectList(db.Countys, "CountyName", "CountyName", reviewSite.CountyName);
-            ViewBag.FMAHolderName = new SelectList(db.FMAHolders, "FMAHolderName", "FMAHolderName", reviewSite.FMAHolderName);
-            ViewBag.NaturalRegionName = new SelectList(db.NaturalRegions, "NaturalRegionName", "NaturalRegionName", reviewSite.NaturalRegionName);
-            ViewBag.NaturalSubRegionName = new SelectList(db.NaturalSubRegions, "NaturalSubRegionName", "NaturalSubRegionName", reviewSite.NaturalSubRegionName);
-            ViewBag.OperatingAreaName = new SelectList(db.OperatingAreas, "OperatingAreaName", "OperatingAreaName", reviewSite.OperatingAreaName);
-            ViewBag.ProvincialAreaName = new SelectList(db.ProvincialAreas, "ProvincialAreaName", "ProvincialAreaName", reviewSite.ProvincialAreaName);
-            ViewBag.ProvincialAreaTypeName = new SelectList(db.ProvincialAreaTypes, "ProvincialAreaTypeName", "ProvincialAreaTypeName", reviewSite.ProvincialAreaTypeName);
-
-            ViewBag.AFE = reviewSite.AFE;
-            ViewBag.SeedZone = reviewSite.SeedZone;
-            ViewBag.WellboreID = reviewSite.WellboreID;
-            ViewBag.UWI = reviewSite.UWI;
-            ViewBag.WellsiteName = reviewSite.WellsiteName;
-            ViewBag.UTMZone = reviewSite.UTMZone;
-
             return View(desktopReview);
         }
 
@@ -157,47 +98,20 @@ namespace wn_web.Controllers.Reclaimation
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DesktopReviewID,SiteID,FacilityTypeName,Notes,Client,ApprovalStatus,WorkPhase,Occupant,OccupantInfo,Disposition,SoilClass,SoilGroup,ERCBLic,Width,Length,AreaHA,AreaAC,Northing,Easting,Latitude,Longitude,Elevation,AspectName,LSD,SurveyDate,ConstructionDate,SpudDate,AbandonmentDate,ReclamationDate,RelevantCriteriaName,LandscapeName,SoilName,VegetationName,RCADate,RCNumber,DSAComments,Exemptions,AmendDate,AmendDetail,RevegDate,RevegDetail")] DesktopReview desktopReview,
-            [Bind(Include = "AFE,ProvincialAreaName,ProvincialAreaTypeName,OperatingAreaName,CountyName,NaturalRegionName,NaturalSubRegionName,FMAHolderName,SeedZone,WellboreID,UWI,WellsiteName,UTMZone")] ReviewSite reviewSite)
+        public ActionResult Edit([Bind(Include = "DesktopReviewID,SiteID,FacilityTypeName,Notes,Client,ApprovalStatus,WorkPhase,Occupant,OccupantInfo,SoilClass,SoilGroup,ERCBLic,Width,Length,AreaHA,AreaAC,Northing,Easting,Latitude,Longitude,Elevation,AspectName,LSD,SurveyDate,ConstructionDate,SpudDate,AbandonmentDate,ReclamationDate,RelevantCriteriaName,LandscapeName,SoilName,VegetationName,RCADate,RCNumber,DSAComments,Exemptions,AmendDate,AmendDetail,RevegDate,RevegDetail")] DesktopReview desktopReview)
         {
-
-            if (desktopReview != null && desktopReview.SiteID != null && desktopReview.SiteID.Length > 0)
+            if (ModelState.IsValid)
             {
-                reviewSite.ReviewSiteID = desktopReview.SiteID;
-
-
-                db.Entry(reviewSite).State = EntityState.Modified;
-                db.SaveChanges();
                 db.Entry(desktopReview).State = EntityState.Modified;
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
-                
             }
-
-            
             ViewBag.FacilityTypeName = new SelectList(db.FacilityTypes, "FacilityTypeName", "FacilityTypeName", desktopReview.FacilityTypeName);
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName", desktopReview.AspectName);
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
-
-            ViewBag.CountyName = new SelectList(db.Countys, "CountyName", "CountyName", reviewSite.CountyName);
-            ViewBag.FMAHolderName = new SelectList(db.FMAHolders, "FMAHolderName", "FMAHolderName", reviewSite.FMAHolderName);
-            ViewBag.NaturalRegionName = new SelectList(db.NaturalRegions, "NaturalRegionName", "NaturalRegionName", reviewSite.NaturalRegionName);
-            ViewBag.NaturalSubRegionName = new SelectList(db.NaturalSubRegions, "NaturalSubRegionName", "NaturalSubRegionName", reviewSite.NaturalSubRegionName);
-            ViewBag.OperatingAreaName = new SelectList(db.OperatingAreas, "OperatingAreaName", "OperatingAreaName", reviewSite.OperatingAreaName);
-            ViewBag.ProvincialAreaName = new SelectList(db.ProvincialAreas, "ProvincialAreaName", "ProvincialAreaName", reviewSite.ProvincialAreaName);
-            ViewBag.ProvincialAreaTypeName = new SelectList(db.ProvincialAreaTypes, "ProvincialAreaTypeName", "ProvincialAreaTypeName", reviewSite.ProvincialAreaTypeName);
-
-            ViewBag.AFE = reviewSite.AFE;
-            ViewBag.SeedZone = reviewSite.SeedZone;
-            ViewBag.WellboreID = reviewSite.WellboreID;
-            ViewBag.UWI = reviewSite.UWI;
-            ViewBag.WellsiteName = reviewSite.WellsiteName;
-            ViewBag.UTMZone = reviewSite.UTMZone;
-
             return View(desktopReview);
         }
 

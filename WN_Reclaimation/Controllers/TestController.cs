@@ -192,6 +192,26 @@ namespace wn_web.Controllers
             }
         }
 
+        public void PrintProperties2()
+        {
+            SiteVisitReport f = new SiteVisitReport();
+            Type t = f.GetType();
+            PropertyInfo[] properties = t.GetProperties();
+            foreach (var p in properties)
+            {
+                if (p.Name.EndsWith("PF"))
+                {
+                    Response.Write("p.put(\"" + p.Name + "\", getPassOrFail(f." + p.Name + ")); <br />" );
+                }
+
+                if (p.Name.EndsWith("Comment"))
+                {
+                    Response.Write("p.put(\"" + p.Name + "\", f." + p.Name + "); <br />");
+                }
+                
+            }
+        }
+
 
 
         private void AddData(Object[] values)

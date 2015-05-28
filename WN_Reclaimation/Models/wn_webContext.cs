@@ -67,7 +67,7 @@ namespace wn_web.Models
             modelBuilder.Entity<Vegetation>().HasKey(x => x.VegetationName);
 
             modelBuilder.Entity<FormType>().HasKey(x => x.FormTypeName);
-            modelBuilder.Entity<Photo>().HasKey(x => x.Path);
+            
 
 
         }

@@ -11,6 +11,8 @@ using System.Web.Script.Serialization;
 using System.Threading.Tasks;
 using wn_web.Models.Reclaimation;
 using WN_Reclaimation;
+using wn_web.Models.Reclaimation.Report;
+using System.Data.Entity;
 
 
 
@@ -18,7 +20,25 @@ namespace wn_web.Controllers.Reclaimation
 {
     public class RDataController : Controller
     {
-        private wn_webContext data = new wn_webContext();
+        private wn_webContext db = new wn_webContext();
+
+        private string getRole(string email)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationUser user = db.Users.Where(w => w.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            List<string> roles = new List<string>();
+            roles = userManager.GetRoles(user.Id) as List<string>;
+
+            if (roles != null && roles.Count() > 0)
+            {
+                return roles[0];
+            }
+
+
+            return null;
+        }
 
         public async Task All(string email, string password)
         {
@@ -40,8 +60,8 @@ namespace wn_web.Controllers.Reclaimation
                             if (role.Equals("super admin")) {
 
                                 //var drs = data.DesktopReviews.ToList();
-                                var rss = data.ReviewSites.ToList();
-                                var fts = data.FacilityTypes.ToList();
+                                var rss = db.ReviewSites.ToList();
+                                var fts = db.FacilityTypes.ToList();
 
                                 var o = new { RS = rss, FT = fts };
 
@@ -52,17 +72,17 @@ namespace wn_web.Controllers.Reclaimation
                             else
                             {
 
-                                var drs = (from a in data.ReviewSites
-                                                 join b in data.DesktopReviews
+                                var drs = (from a in db.ReviewSites
+                                                 join b in db.DesktopReviews
                                                  on a.ReviewSiteID equals b.SiteID
                                                  where a.DataOwner.Equals(role, StringComparison.CurrentCultureIgnoreCase)
                                                  select b).ToList();
 
-                                var rss = data.ReviewSites
+                                var rss = db.ReviewSites
                                     .Where(w => w.DataOwner.Equals(role, StringComparison.CurrentCultureIgnoreCase))
                                     .ToList();
 
-                                var fts = data.FacilityTypes.ToList();
+                                var fts = db.FacilityTypes.ToList();
 
                                 var o = new { DR = drs, RS = rss, FT = fts };
 
@@ -97,12 +117,12 @@ namespace wn_web.Controllers.Reclaimation
                         {
                             if (role.Equals("super admin"))
                             {
-                                list = data.ReviewSites.ToList();
+                                list = db.ReviewSites.ToList();
                             }
                             else
                             {
                                 //list = data.ReviewSites.Where(w => w.Client.Equals(role, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                                list = data.ReviewSites.Where(w => w.DataOwner.Equals(role)).ToList();
+                                list = db.ReviewSites.Where(w => w.DataOwner.Equals(role)).ToList();
                             }
                             string json = new JavaScriptSerializer().Serialize(Json(list, JsonRequestBehavior.AllowGet).Data);
                             Response.Write(json);
@@ -129,7 +149,7 @@ namespace wn_web.Controllers.Reclaimation
                     case SignInStatus.Success:
                         List<FacilityType> list = new List<FacilityType>();
                         
-                        list = data.FacilityTypes.ToList();
+                        list = db.FacilityTypes.ToList();
                         string json = new JavaScriptSerializer().Serialize(Json(list, JsonRequestBehavior.AllowGet).Data);
                         Response.Write(json);
                         
@@ -140,22 +160,68 @@ namespace wn_web.Controllers.Reclaimation
 
         }
 
-        private string getRole(string email)
+        [HttpPost]
+        public async Task SiteVisitSubmit(FormCollection fc, [Bind(Include="NumberOfImages")]int NumberOfImages,[Bind(Include="SiteVisitReportID,ReviewSiteID,FacilityTypeName,Date,Username,Group,Client,RefusePF,RefuseComment,DrainagePF,DrainageComment,RockGravelPF,RockGravelComment,BareGroundPF,BareGroundComment,SoilStabilityPF,SoilStabilityComment,ContoursPF,ContoursComment,CWDPF,CWDComment,ErosionPF,ErosionComment,SoilCharPF,SoilCharComment,TopsoilDepthPF,TopsoilDepthComment,RootingPF,RootingComment,WSDPF,WSDComment,TreeHealthPF,TreeHealthComment,WeedsInvasivesPF,WeedsInvasivesComment,NSCPF,NSCComment,LitterPF,LitterComment,Recommendation,ReviewSite,FacilityType")]SiteVisitReport svr)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            ApplicationUser user = db.Users.Where(w => w.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            List<string> roles = new List<string>();
-            roles = userManager.GetRoles(user.Id) as List<string>;
-
-            if (roles != null && roles.Count() > 0)
+            if (Request != null)
             {
-                return roles[0];
+
+                var username = fc["Username"];
+                var password = fc["Password"];
+
+                ApplicationSignInManager sm = HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+
+                var result = await sm.PasswordSignInAsync(username, password, false, false);
+
+                if (result == SignInStatus.Success)
+                {
+
+                    SiteVisitReport siteVisitReport = db.SiteVisitReports
+                        .Where(w => w.ReviewSiteID.Equals(svr.ReviewSiteID) 
+                            && w.FacilityTypeName.Equals(svr.FacilityTypeName)
+                            && w.Date.Equals(svr.Date)).FirstOrDefault();
+                    int formID;
+                    if (siteVisitReport == null)
+                    {
+
+                        db.SiteVisitReports.Add(svr);
+                        db.SaveChanges();
+
+                        formID = svr.SiteVisitReportID;
+
+                    }
+                    else
+                    {
+                        formID = siteVisitReport.SiteVisitReportID;
+                    }
+
+                    for (int i = 0; i < NumberOfImages; i++)
+                    {
+                        Photo p = new Photo();
+                        p.PhotoID = 0;
+                        p.Path = fc["Path" + i];
+                        p.FormTypeName = fc["FormType" + i];
+                        p.FormID = formID;
+                        p.Description = fc["Desc" + i];
+                        p.Classification = fc["Classification" + i];
+
+
+                        Photo tempPhoto = db.Photos.Where(w => w.Path.Equals(p.Path)).FirstOrDefault();
+                        if (tempPhoto == null)
+                        {
+                            db.Photos.Add(p);
+                        }
+
+                    }
+
+                    db.SaveChanges();
+
+
+                    Response.Write("Form Submitted");
+                }
+
             }
-
-
-            return null;
         }
+
     }
 }

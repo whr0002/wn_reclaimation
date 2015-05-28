@@ -196,7 +196,10 @@
     <Compile Include="Controllers\QAController.cs" />
     <Compile Include="Controllers\Reclaimation\DesktopReviewsController.cs" />
     <Compile Include="Controllers\Reclaimation\ErrorController.cs" />
+    <Compile Include="Controllers\Reclaimation\FormTypesController.cs" />
     <Compile Include="Controllers\Reclaimation\RDataController.cs" />
+    <Compile Include="Controllers\Reclaimation\Report\PhotosController.cs" />
+    <Compile Include="Controllers\Reclaimation\Report\SiteVisitReportsController.cs" />
     <Compile Include="Controllers\Reclaimation\ReviewSitesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SearchTypesController.cs" />
@@ -205,11 +208,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201505281638470_1.cs" />
-    <Compile Include="Migrations\201505281638470_1.Designer.cs">
-      <DependentUpon>201505281638470_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdvancedSearchItem.cs" />
     <Compile Include="Models\AndroidViewModel.cs" />
@@ -290,6 +288,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\reclamation.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -385,10 +384,24 @@
     <Content Include="Views\DesktopReviews\Details.cshtml" />
     <Content Include="Views\DesktopReviews\Edit.cshtml" />
     <Content Include="Views\DesktopReviews\Index.cshtml" />
+    <Content Include="Views\SiteVisitReports\Create.cshtml" />
+    <Content Include="Views\SiteVisitReports\Delete.cshtml" />
+    <Content Include="Views\SiteVisitReports\Details.cshtml" />
+    <Content Include="Views\SiteVisitReports\Edit.cshtml" />
+    <Content Include="Views\SiteVisitReports\Index.cshtml" />
+    <Content Include="Views\FormTypes\Create.cshtml" />
+    <Content Include="Views\FormTypes\Delete.cshtml" />
+    <Content Include="Views\FormTypes\Details.cshtml" />
+    <Content Include="Views\FormTypes\Edit.cshtml" />
+    <Content Include="Views\FormTypes\Index.cshtml" />
+    <Content Include="Views\Photos\Create.cshtml" />
+    <Content Include="Views\Photos\Delete.cshtml" />
+    <Content Include="Views\Photos\Details.cshtml" />
+    <Content Include="Views\Photos\Edit.cshtml" />
+    <Content Include="Views\Photos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\KML\" />
-    <Folder Include="Controllers\Reclaimation\Report\" />
     <Folder Include="Views\AndroidData\" />
     <Folder Include="Views\Android\" />
     <Folder Include="Views\Data\" />
@@ -405,11 +418,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505281638470_1.resx">
-      <DependentUpon>201505281638470_1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

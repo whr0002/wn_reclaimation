@@ -6,9 +6,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WN_Reclaimation.Models;
+using wn_web.Models;
+using WN_Reclaimation;
 
-namespace WN_Reclaimation.Controllers
+namespace wn_web.Controllers
 {
     [Authorize]
     public class ManageController : Controller

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace WN_Reclaimation.Models
+namespace wn_web.Models
 {
     public class IndexViewModel
     {

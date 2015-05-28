@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using WN_Reclaimation.Models;
+using wn_web.Models;
 
 namespace WN_Reclaimation
 {

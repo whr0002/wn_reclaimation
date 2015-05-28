@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WN_Reclaimation.Models;
+using wn_web.Models;
 
 namespace WN_Reclaimation.Controllers
 {

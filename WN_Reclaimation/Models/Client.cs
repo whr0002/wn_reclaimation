@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WN_Reclaimation.Models
+namespace wn_web.Models
 {
     public class Client
     {
-        public int ClientID { get; set; }
+        public int ID { get; set; }
         public string ClientName { get; set; }
     }
 }

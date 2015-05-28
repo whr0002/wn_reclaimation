@@ -8,9 +8,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WN_Reclaimation.Models;
+using wn_web.Models;
+using WN_Reclaimation;
 
-namespace WN_Reclaimation.Controllers
+namespace wn_web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -72,6 +73,17 @@ namespace WN_Reclaimation.Controllers
             {
                 return View(model);
             }
+
+            // Require the user to have a confirmed email before they can log on
+            //var user = await UserManager.FindByNameAsync(model.Email);
+            //if (user != null)
+            //{
+            //    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+            //    {
+            //        ViewBag.errorMessage = "You must have a confirmed email to log on.";
+            //        return View("Error");
+            //    }
+            //}
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -136,7 +148,8 @@ namespace WN_Reclaimation.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "super admin,admin")]
         public ActionResult Register()
         {
             return View();
@@ -145,7 +158,8 @@ namespace WN_Reclaimation.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "super admin,admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -155,15 +169,25 @@ namespace WN_Reclaimation.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                    //    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, 
+                    //    "Confirm your account", "Please confirm your account by clicking <a href=\"" 
+                    //    + callbackUrl + "\">here</a>");
+                    
+                    await UserManager.SendEmailAsync(user.Id,
+                        "Your SCARI Account is Ready", "Username: "+model.Email +" <br />Password: "+model.Password);
 
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.Message = "Email is sent to client.";
+                    return await ConfirmEmail(user.Id, code);
+
+                    //return View("Information");
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -211,10 +235,18 @@ namespace WN_Reclaimation.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                
+                // User try to change password, send a notice to ourselves
+                var user2 = await UserManager.FindByNameAsync("info@woodlandsnorth.co");
+                if (user2 != null)
+                {
+                    await UserManager.SendEmailAsync(user2.Id, "User Action - Reset Passowrd", "User " + model.Email + " resetted password.");
+                }
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

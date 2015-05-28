@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using WN_Reclaimation.Models;
+using wn_web.Models;
 
 namespace WN_Reclaimation
 {

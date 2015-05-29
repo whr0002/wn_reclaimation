@@ -13,6 +13,9 @@ using wn_web.Models.Reclaimation;
 using WN_Reclaimation;
 using wn_web.Models.Reclaimation.Report;
 using System.Data.Entity;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 
 
@@ -21,6 +24,7 @@ namespace wn_web.Controllers.Reclaimation
     public class RDataController : Controller
     {
         private wn_webContext db = new wn_webContext();
+        private static readonly string STORAGE_BASE_URL = "https://reclamation.blob.core.windows.net/";
 
         private string getRole(string email)
         {
@@ -176,52 +180,127 @@ namespace wn_web.Controllers.Reclaimation
                 if (result == SignInStatus.Success)
                 {
 
-                    SiteVisitReport siteVisitReport = db.SiteVisitReports
-                        .Where(w => w.ReviewSiteID.Equals(svr.ReviewSiteID) 
-                            && w.FacilityTypeName.Equals(svr.FacilityTypeName)
-                            && w.Date.Equals(svr.Date)).FirstOrDefault();
-                    int formID;
-                    if (siteVisitReport == null)
+                    string role = getRole(username);
+                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                    CloudBlobContainer container = blobClient.GetContainerReference("unknown"); // default container
+
+                    if (role != null && role.Length > 0)
                     {
+                        role = role.ToLower();
+                        // To make sure that the user has a role
+                        if (role.Equals("super admin"))
+                        {
+                            container = blobClient.GetContainerReference("superadmin");
+                        }
+                        else
+                        {
+                            container = blobClient.GetContainerReference(role);
+                        }
 
-                        db.SiteVisitReports.Add(svr);
-                        db.SaveChanges();
+                        // Create the container if not exists
+                        if (container.CreateIfNotExists())
+                        {
+                            var permission = container.GetPermissions();
+                            permission.PublicAccess = BlobContainerPublicAccessType.Container;
+                            container.SetPermissions(permission);
+                        }
 
-                        formID = svr.SiteVisitReportID;
 
+
+                        // Store form first to get form ID which is used by images
+                        SiteVisitReport siteVisitReport = db.SiteVisitReports
+                                                    .Where(w => w.ReviewSiteID.Equals(svr.ReviewSiteID)
+                                                        && w.FacilityTypeName.Equals(svr.FacilityTypeName)
+                                                        && w.Date.Equals(svr.Date)).FirstOrDefault();
+                        int formID;
+                        if (siteVisitReport == null)
+                        {
+
+                            db.SiteVisitReports.Add(svr);
+                            db.SaveChanges();
+
+                            formID = svr.SiteVisitReportID;
+
+                        }
+                        else
+                        {
+                            formID = siteVisitReport.SiteVisitReportID;
+                        }
+
+                        // Store images
+                        bool isSuccess = true;
+
+                        for (int i = 0; i < NumberOfImages; i++)
+                        {
+                            // Create a photo record
+                            Photo p = new Photo();
+                            p.PhotoID = 0;
+                            p.Path = STORAGE_BASE_URL + container.Name + "/" + fc["Path" + i];
+                            p.FormTypeName = fc["FormType" + i];
+                            p.FormID = formID;
+                            p.Description = fc["Desc" + i];
+                            p.Classification = fc["Classification" + i];
+
+                            
+
+
+                            Photo tempPhoto = db.Photos.Where(w => w.Path.Equals(p.Path)).FirstOrDefault();
+                            if (tempPhoto == null)
+                            {
+                                db.Photos.Add(p);
+                            }
+
+                            // upload photo to azure storage
+                            HttpPostedFileBase image = Request.Files["Image" + i];
+                            if (image != null && image.ContentLength > 0 && !string.IsNullOrEmpty(image.FileName))
+                            {
+                                CloudBlockBlob blob = container.GetBlockBlobReference(image.FileName);
+                                blob.Properties.ContentType = image.ContentType;
+                                blob.UploadFromStream(image.InputStream);
+
+                                if (!blob.Exists())
+                                {
+                                    isSuccess = false;
+                                }
+                            }
+
+                        }
+
+                        
+                        if (isSuccess)
+                        {
+                            // Everything is good. Commit changes.
+                            db.SaveChanges();
+                            Response.Write("Form Submitted");
+
+                        }
+                        else
+                        {
+                            // Fail otherwise
+                            Response.Write("Fail");
+                        }
+    
                     }
                     else
                     {
-                        formID = siteVisitReport.SiteVisitReportID;
+                        // The user does not have a role, upload fail
+                        Response.Write("Fail");
                     }
 
-                    for (int i = 0; i < NumberOfImages; i++)
-                    {
-                        Photo p = new Photo();
-                        p.PhotoID = 0;
-                        p.Path = fc["Path" + i];
-                        p.FormTypeName = fc["FormType" + i];
-                        p.FormID = formID;
-                        p.Description = fc["Desc" + i];
-                        p.Classification = fc["Classification" + i];
-
-
-                        Photo tempPhoto = db.Photos.Where(w => w.Path.Equals(p.Path)).FirstOrDefault();
-                        if (tempPhoto == null)
-                        {
-                            db.Photos.Add(p);
-                        }
-
-                    }
-
-                    db.SaveChanges();
-
-
-                    Response.Write("Form Submitted");
                 }
-
+                else
+                {
+                    // Login failed
+                    Response.Write("Fail");
+                }
             }
-        }
+            else
+            {
+                // Request is null
+                Response.Write("Fail");
+            }
 
+        } //end of method
     }
 }

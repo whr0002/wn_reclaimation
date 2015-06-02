@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -118,7 +121,26 @@ namespace WN_Reclaimation.Controllers.Reclaimation.Report
             Photo photo = db.Photos.Find(id);
             db.Photos.Remove(photo);
             db.SaveChanges();
+
+            //deletePhoto(photo.Path);
             return RedirectToAction("Index");
+        }
+
+        private void deletePhoto(String path) {
+
+            try { 
+            CloudStorageAccount account = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            CloudBlobClient client = account.CreateCloudBlobClient();
+
+            StorageUri uri = new StorageUri(new Uri(path));
+
+            ICloudBlob blob = client.GetBlobReferenceFromServer(uri);
+
+            if(blob.Exists())
+                blob.Delete();
+            }
+            catch (Exception e) { }
+
         }
 
         protected override void Dispose(bool disposing)

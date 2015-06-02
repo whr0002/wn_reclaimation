@@ -207,7 +207,7 @@ namespace wn_web.Controllers.Reclaimation
                         }
 
 
-
+                        
                         // Store form first to get form ID which is used by images
                         SiteVisitReport siteVisitReport = db.SiteVisitReports
                                                     .Where(w => w.ReviewSiteID.Equals(svr.ReviewSiteID)

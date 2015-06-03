@@ -206,7 +206,7 @@
                         </fieldset>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <fieldset>
                             <legend>Layers</legend>
                             <input type="checkbox" id="raw_data" onclick="getRawData()" />Raw Data<br />
@@ -258,7 +258,7 @@
                 <h1>Details</h1>
                 <div id="detailDiv" class="row">
                     <div class="col-md-12">
-                        <a href="/desktopreviews/create" class="btn btn-primary">Create</a>
+                        <a href="/tutorial" class="btn btn-primary">Create</a>
                     </div>
                     @using (Html.BeginForm("ShowOnNewTab", "Data", FormMethod.Post, new { target = "_blank" }))
                     {

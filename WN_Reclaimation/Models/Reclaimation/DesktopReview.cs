@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -108,8 +109,8 @@ namespace wn_web.Models.Reclaimation
 
 
 
-
-
+        [ForeignKey("SiteID")]
+        public virtual ReviewSite Site { get; set; }
         public virtual FacilityType FacilityType { get; set; }
         public virtual Aspect LSDQuarter { get; set; }       
         public virtual RelevantCriteria RelevantCriteria { get; set; }

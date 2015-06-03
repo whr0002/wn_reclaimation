@@ -62,7 +62,8 @@ namespace wn_web.Controllers.Reclaimation
             {
                 db.ReviewSites.Add(reviewSite);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Tutorial");
+                //return RedirectToAction("Index");
             }
 
             ViewBag.CountyName = new SelectList(db.Countys, "CountyName", "CountyName", reviewSite.CountyName);

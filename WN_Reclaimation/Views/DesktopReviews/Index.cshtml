@@ -24,13 +24,13 @@
             @Html.DisplayNameFor(model => model.RelevantCriteria.RelevantCriteriaName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Site.DataOwner)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Soil.SoilName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Vegetation.VegetationName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SiteID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Notes)
@@ -146,13 +146,13 @@
             @Html.DisplayFor(modelItem => item.RelevantCriteria.RelevantCriteriaName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Site.DataOwner)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Soil.SoilName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Vegetation.VegetationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SiteID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Notes)

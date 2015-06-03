@@ -453,8 +453,8 @@ namespace wn_web.Controllers
             var re = db.ReviewSites.Find(r.ReviewSiteID);
             if (re == null)
             {
-                db.ReviewSites.Add(r);
-                db.SaveChanges();
+                //db.ReviewSites.Add(r);
+                //db.SaveChanges();
             }
         }
 

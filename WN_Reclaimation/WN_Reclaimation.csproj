@@ -186,9 +186,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AndroidController.cs" />
     <Compile Include="Controllers\AndroidDataController.cs" />
-    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
-    <Compile Include="Controllers\FacilityTypesController.cs" />
     <Compile Include="Controllers\FieldDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KmlsController.cs" />
@@ -201,6 +199,7 @@
     <Compile Include="Controllers\Reclaimation\Report\PhotosController.cs" />
     <Compile Include="Controllers\Reclaimation\Report\SiteVisitReportsController.cs" />
     <Compile Include="Controllers\Reclaimation\ReviewSitesController.cs" />
+    <Compile Include="Controllers\Reclaimation\TutorialController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SearchTypesController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
@@ -208,6 +207,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506032122363_initial.cs" />
+    <Compile Include="Migrations\201506032122363_initial.Designer.cs">
+      <DependentUpon>201506032122363_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdvancedSearchItem.cs" />
     <Compile Include="Models\AndroidViewModel.cs" />
@@ -215,7 +219,6 @@
     <Compile Include="Models\ClientLogo.cs" />
     <Compile Include="Models\Coordinate.cs" />
     <Compile Include="Models\DateType.cs" />
-    <Compile Include="Models\DesktopReview.cs" />
     <Compile Include="Models\Dropdowns\Access.cs" />
     <Compile Include="Models\Dropdowns\BaseDropdown.cs" />
     <Compile Include="Models\Dropdowns\CrossingType.cs" />
@@ -230,7 +233,6 @@
     <Compile Include="Models\Dropdowns\StreamType.cs" />
     <Compile Include="Models\Dropdowns\StreamWidthMeasured.cs" />
     <Compile Include="Models\Dropdowns\YesNoPot.cs" />
-    <Compile Include="Models\FacilityType.cs" />
     <Compile Include="Models\FieldData.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JsonModel.cs" />
@@ -258,7 +260,6 @@
     <Compile Include="Models\Reclaimation\ReviewSite.cs" />
     <Compile Include="Models\Reclaimation\Soil.cs" />
     <Compile Include="Models\Reclaimation\Vegetation.cs" />
-    <Compile Include="Models\Reclaimation_Context.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\SearchObject.cs" />
     <Compile Include="Models\SearchType.cs" />
@@ -379,11 +380,6 @@
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\ManageUserRoles.cshtml" />
-    <Content Include="Views\DesktopReviews\Create.cshtml" />
-    <Content Include="Views\DesktopReviews\Delete.cshtml" />
-    <Content Include="Views\DesktopReviews\Details.cshtml" />
-    <Content Include="Views\DesktopReviews\Edit.cshtml" />
-    <Content Include="Views\DesktopReviews\Index.cshtml" />
     <Content Include="Views\SiteVisitReports\Create.cshtml" />
     <Content Include="Views\SiteVisitReports\Delete.cshtml" />
     <Content Include="Views\SiteVisitReports\Details.cshtml" />
@@ -399,6 +395,12 @@
     <Content Include="Views\Photos\Details.cshtml" />
     <Content Include="Views\Photos\Edit.cshtml" />
     <Content Include="Views\Photos\Index.cshtml" />
+    <Content Include="Views\Tutorial\Index.cshtml" />
+    <Content Include="Views\DesktopReviews\Create.cshtml" />
+    <Content Include="Views\DesktopReviews\Delete.cshtml" />
+    <Content Include="Views\DesktopReviews\Details.cshtml" />
+    <Content Include="Views\DesktopReviews\Edit.cshtml" />
+    <Content Include="Views\DesktopReviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\KML\" />
@@ -418,6 +420,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506032122363_initial.resx">
+      <DependentUpon>201506032122363_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -18,7 +18,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation
         // GET: DesktopReviews
         public ActionResult Index()
         {
-            var desktopReviews = db.DesktopReviews.Include(d => d.FacilityType).Include(d => d.Landscape).Include(d => d.LSDQuarter).Include(d => d.RelevantCriteria).Include(d => d.Soil).Include(d => d.Vegetation);
+            var desktopReviews = db.DesktopReviews.Include(d => d.FacilityType).Include(d => d.Landscape).Include(d => d.LSDQuarter).Include(d => d.RelevantCriteria).Include(d => d.Site).Include(d => d.Soil).Include(d => d.Vegetation);
             return View(desktopReviews.ToList());
         }
 
@@ -44,6 +44,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName");
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName");
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName");
+            ViewBag.SiteID = new SelectList(db.ReviewSites, "ReviewSiteID", "ReviewSiteID");
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName");
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName");
             return View();
@@ -67,6 +68,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName", desktopReview.AspectName);
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
+            ViewBag.SiteID = new SelectList(db.ReviewSites, "ReviewSiteID", "ReviewSiteID", desktopReview.SiteID);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
             return View(desktopReview);
@@ -88,6 +90,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName", desktopReview.AspectName);
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
+            ViewBag.SiteID = new SelectList(db.ReviewSites, "ReviewSiteID", "ReviewSiteID", desktopReview.SiteID);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
             return View(desktopReview);
@@ -110,6 +113,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation
             ViewBag.LandscapeName = new SelectList(db.Landscapes, "LandscapeName", "LandscapeName", desktopReview.LandscapeName);
             ViewBag.AspectName = new SelectList(db.Aspects, "AspectName", "AspectName", desktopReview.AspectName);
             ViewBag.RelevantCriteriaName = new SelectList(db.RelevantCriterias, "RelevantCriteriaName", "RelevantCriteriaName", desktopReview.RelevantCriteriaName);
+            ViewBag.SiteID = new SelectList(db.ReviewSites, "ReviewSiteID", "ReviewSiteID", desktopReview.SiteID);
             ViewBag.SoilName = new SelectList(db.Soils, "SoilName", "SoilName", desktopReview.SoilName);
             ViewBag.VegetationName = new SelectList(db.Vegetations, "VegetationName", "VegetationName", desktopReview.VegetationName);
             return View(desktopReview);

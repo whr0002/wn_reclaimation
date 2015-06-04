@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.FacilityType.FacilityTypeName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReviewSite.ReviewSiteID)
+            @Html.DisplayNameFor(model => model.ReviewSiteID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
@@ -28,6 +28,12 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Client)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RefusePF)
@@ -137,7 +143,7 @@
             @Html.DisplayFor(modelItem => item.FacilityType.FacilityTypeName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ReviewSite.ReviewSiteID)
+            @Html.DisplayFor(modelItem => item.ReviewSiteID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
@@ -150,6 +156,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Client)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Longitude)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RefusePF)

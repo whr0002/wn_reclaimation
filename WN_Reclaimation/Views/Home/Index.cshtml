@@ -6,7 +6,7 @@
 {
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing,geometry"></script>
     @*<script src="http://maps.googleapis.com/maps/api/js"></script>*@
-    
+
     <script src="~/Scripts/Maps/map_controls.js"></script>
     <script src="~/Scripts/Maps/layer_controls.js"></script>
     <script src="~/Scripts/Maps/label.js"></script>
@@ -26,7 +26,8 @@
     <script src="~/Scripts/PDFGenerator/Form.js"></script>
     <script src="~/Scripts/Maps/raw_data.js"></script>
     <script src="~/Scripts/Maps/Search.js"></script>
-
+    <script src="~/Scripts/Maps/angular.min.js"></script>
+    <script src="~/Scripts/Maps/controllers.js"></script>
 }
 
 @section mapcss{
@@ -46,8 +47,13 @@
                 <h1>Controls</h1>
                 <!--<input id="temp" value="Click me" type="submit" onclick="Test()"/>-->
 
+
                 <div class="row">
+
+
                     <div class="col-md-12">
+                        <!-- Search Section -->
+                        <!--
                         <fieldset>
                             <legend>Search</legend>
                             <div class="row">
@@ -57,50 +63,51 @@
                                 </div>
                                 <div id="AdvSearchSection" class="col-xs-12 col-sm-12 col-md-12 cmargintop">
                                     @{
-                                        if (ViewBag.AdvanceSearch != null) { 
-                                        int j = 0;
-                                        foreach (var adv in (ViewBag.AdvanceSearch as List<wn_web.Models.AdvancedSearchItem>))
+                                        if (ViewBag.AdvanceSearch != null)
                                         {
-                                            string k = "advSearchKey" + j;
-                                            string n = "advSearchValue" + j;
-                                            <div class="row cmargintop">
-                                                <div class="col-xs-4 col-sm-4 col-md-4" id="@k" name="@k">
-                                                    @adv.Name
-                                                </div>
+                                            int j = 0;
+                                            foreach (var adv in (ViewBag.AdvanceSearch as List<wn_web.Models.AdvancedSearchItem>))
+                                            {
+                                                string k = "advSearchKey" + j;
+                                                string n = "advSearchValue" + j;
+                                                <div class="row cmargintop">
+                                                    <div class="col-xs-4 col-sm-4 col-md-4" id="@k" name="@k">
+                                                        @adv.Name
+                                                    </div>
 
-                                                <div class="col-xs-8 col-sm-8 col-md-8">
-                                                    @*@Html.DropDownList("SearchVa", (IEnumerable<SelectListItem>)adv.SelectList, "Select ...");*@
-                                                    @if (!adv.Name.Equals("Date"))
-                                                    {
-                                                        <select id="@n" name="@n" style="width:200px;">
-                                                            <option>Select ...</option>
-                                                            @if (adv.Options != null)
-                                                            {
-                                                                foreach (var aitem in (adv.Options as List<string>))
+                                                    <div class="col-xs-8 col-sm-8 col-md-8">
+                                                        @*@Html.DropDownList("SearchVa", (IEnumerable<SelectListItem>)adv.SelectList, "Select ...");*@
+                                                        @if (!adv.Name.Equals("Date"))
+                                                        {
+                                                            <select id="@n" name="@n" style="width:200px;">
+                                                                <option>Select ...</option>
+                                                                @if (adv.Options != null)
                                                                 {
-                                                                    <option value="@aitem">@aitem</option>
+                                                                    foreach (var aitem in (adv.Options as List<string>))
+                                                                    {
+                                                                        <option value="@aitem">@aitem</option>
+                                                                    }
                                                                 }
-                                                            }
-                                                        </select>
-                                                    }
-                                                    else
-                                                    {
-                                                        // Show two input fields for Date
-                                                        <label for="advFrom">From</label>
-                                                        <input class="datefield" id="advFrom" name="advFrom" type="date" />
-                                                        <label for="advTo">to</label>
-                                                        <input class="datefield" id="advTo" name="advTo" type="date" />
-                                                    }
+                                                            </select>
+                                                        }
+                                                        else
+                                                        {
+                                                            // Show two input fields for Date
+                                                            <label for="advFrom">From</label>
+                                                            <input class="datefield" id="advFrom" name="advFrom" type="date" />
+                                                            <label for="advTo">to</label>
+                                                            <input class="datefield" id="advTo" name="advTo" type="date" />
+                                                        }
+                                                    </div>
                                                 </div>
-                                            </div>
-                                                    j++;
-                                        }
-                                        
-                                        <text>
-                                            <script type="text/javascript">
-                                                numOfSearchTypes = @j;
-                                            </script>
-                                        </text>
+                                                        j++;
+                                            }
+
+                                            <text>
+                                                <script type="text/javascript">
+                                                    numOfSearchTypes = @j;
+                                                </script>
+                                            </text>
                                         }
                                     }
                                     <div class="row">
@@ -116,8 +123,9 @@
                                         Search Types:
                                     </div>
                                     <div class="col-md-8">
-                                        @if(ViewBag.SearchTypes != null){
-                                            @Html.DropDownList("SearchType", (IEnumerable<SelectListItem>)ViewBag.SearchTypes, "Select ...", new { @class="cu_width"})
+                                        @if (ViewBag.SearchTypes != null)
+                                        {
+                                            @Html.DropDownList("SearchType", (IEnumerable<SelectListItem>)ViewBag.SearchTypes, "Select ...", new { @class = "cu_width" })
                                         }
                                     </div>
                                 </div>
@@ -152,11 +160,11 @@
                                                 <th class="cu_tr">5</th>
                                             </tr>
                                             <tr>
-                                                
+
                                                 @{
-                                                    
+
                                                     var counter = 0;
-                                                    for (var i = 0; i < 9;i++ )
+                                                    for (var i = 0; i < 9; i++)
                                                     {
 
                                                         int j = i + 1;
@@ -187,6 +195,7 @@
                                 </div>
                             </div>
                         </fieldset>
+                            -->
 
 
 
@@ -196,26 +205,48 @@
 
                     </div>
 
-                    <div class="col-md-6">
-                        <fieldset>
-                            <legend>Markers</legend>
-                            <input type="checkbox" id="marker_highRisk" onclick="checkboxAction('high')" checked/>High Risk<br />
-                            <input type="checkbox" id="marker_modRisk" onclick="checkboxAction('mod')" checked />Moderate Risk<br />
-                            <input type="checkbox" id="marker_lowRisk" onclick="checkboxAction('low')" checked />Low Risk<br />
-                            <input type="checkbox" id="marker_noRisk" onclick="checkboxAction('no')" checked />No Risk<br />
-                        </fieldset>
-                    </div>
+                    @*<div class="col-md-6">
+                            <fieldset>
+                                <legend>Markers</legend>
+                                <input type="checkbox" id="marker_highRisk" onclick="checkboxAction('high')" checked />High Risk<br />
+                                <input type="checkbox" id="marker_modRisk" onclick="checkboxAction('mod')" checked />Moderate Risk<br />
+                                <input type="checkbox" id="marker_lowRisk" onclick="checkboxAction('low')" checked />Low Risk<br />
+                                <input type="checkbox" id="marker_noRisk" onclick="checkboxAction('no')" checked />No Risk<br />
+                            </fieldset>
+                        </div>*@
+
+                    <text>
+                        <script type="text/javascript">
+
+                            var isSA = "@ViewBag.isSA";
+
+                        </script>
+                    </text>
+
+
 
                     <div class="col-md-12">
-                        <fieldset>
-                            <legend>Layers</legend>
-                            <input type="checkbox" id="raw_data" onclick="getRawData()" />Raw Data<br />
+                        <fieldset ng-controller="SiteVisitController">
+                            <legend>Data</legend>
+                            <p ng-repeat="type in rawDataTypes">
+                                <label>
+                                    <input type="checkbox"
+                                           name="selectedTypes[]"
+                                           value="{{type.name}}"
+                                           ng-model="type.selected"
+                                           ng-click="getData(e, type)" />{{type.name}}<br />
+
+                                </label>
+                            </p>
+
+
+
                             @if (Model != null)
                             {
                                 foreach (var item in Model)
                                 {
 
-                                <input type="checkbox" id="layer_@item.ID" onclick="layerController('#layer_@item.ID')" />@item.Name<br />
+                                    <input type="checkbox" id="layer_@item.ID" onclick="layerController('#layer_@item.ID')" />@item.Name<br />
                                     <text>
                                         <script type="text/javascript">
 
@@ -230,42 +261,47 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <fieldset>
-                            <legend>Downloads</legend>
-                            <h5>Download PDF For Selected Markers</h5>
-                            <div class="row">
-                                
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    @Html.RadioButton("pdf_download_option", "single", true) In a Single PDF
-                                    @Html.RadioButton("pdf_download_option", "multiple") In Multiple PDFs
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="postPositions()">Download</button>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                        </fieldset>
+                <!-- Download PDF Section -->
+                @*<div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Downloads</legend>
+                                <h5>Download PDF For Selected Markers</h5>
+                                <div class="row">
 
-                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        @Html.RadioButton("pdf_download_option", "single", true) In a Single PDF
+                                        @Html.RadioButton("pdf_download_option", "multiple") In Multiple PDFs
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <button type="button" class="btn btn-primary" onclick="postPositions()">Download</button>
+                                    </div>
+                                </div>
 
-                </div>
+
+
+                            </fieldset>
+
+                        </div>
+
+                    </div>*@
                 <hr />
 
                 <h1>Details</h1>
                 <div id="detailDiv" class="row">
-                    <div class="col-md-12">
-                        <a href="/tutorial" class="btn btn-primary">Create</a>
-                    </div>
+                    @if (ViewBag.isSA != null)
+                    {
+                        <div class="col-md-12">
+                            <a href="/tutorial" class="btn btn-primary">Create</a>
+                        </div>
+                    }
+                    
                     @using (Html.BeginForm("ShowOnNewTab", "Data", FormMethod.Post, new { target = "_blank" }))
                     {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary()
-                    <div id="downloadDiv" class="col-md-12">
-                    </div>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary()
+                        <div id="downloadDiv" class="col-md-12">
+                        </div>
 
 
                     }
@@ -306,7 +342,7 @@
         <div id="firstBtn" class="toolBtns">
             <a class="mA" onclick="toolbarControls()"><img src="~/Content/Images/controls.png" class="img-responsive" /></a>
         </div>
-        <hr class="mhr2"/>
+        <hr class="mhr2" />
 
     </div>
 

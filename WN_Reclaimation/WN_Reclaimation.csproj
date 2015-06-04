@@ -192,6 +192,7 @@
     <Compile Include="Controllers\KmlsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QAController.cs" />
+    <Compile Include="Controllers\RawDataController.cs" />
     <Compile Include="Controllers\Reclaimation\DesktopReviewsController.cs" />
     <Compile Include="Controllers\Reclaimation\ErrorController.cs" />
     <Compile Include="Controllers\Reclaimation\FormTypesController.cs" />
@@ -210,6 +211,10 @@
     <Compile Include="Migrations\201506032122363_initial.cs" />
     <Compile Include="Migrations\201506032122363_initial.Designer.cs">
       <DependentUpon>201506032122363_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506041609138_1.cs" />
+    <Compile Include="Migrations\201506041609138_1.Designer.cs">
+      <DependentUpon>201506041609138_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,7 +314,9 @@
     <Content Include="Scripts\jsPDF\jspdf.plugin.split_text_to_size.js" />
     <Content Include="Scripts\jsPDF\jspdf.plugin.standard_fonts_metrics.js" />
     <Content Include="Scripts\jsPDF\jspdf.PLUGINTEMPLATE.js" />
+    <Content Include="Scripts\Maps\angular.min.js" />
     <Content Include="Scripts\Maps\bootstrap-datepicker.js" />
+    <Content Include="Scripts\Maps\controllers.js" />
     <Content Include="Scripts\Maps\label.js" />
     <Content Include="Scripts\Maps\layer_controls.js" />
     <Content Include="Scripts\Maps\map_controls.js" />
@@ -380,11 +387,6 @@
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\ManageUserRoles.cshtml" />
-    <Content Include="Views\SiteVisitReports\Create.cshtml" />
-    <Content Include="Views\SiteVisitReports\Delete.cshtml" />
-    <Content Include="Views\SiteVisitReports\Details.cshtml" />
-    <Content Include="Views\SiteVisitReports\Edit.cshtml" />
-    <Content Include="Views\SiteVisitReports\Index.cshtml" />
     <Content Include="Views\FormTypes\Create.cshtml" />
     <Content Include="Views\FormTypes\Delete.cshtml" />
     <Content Include="Views\FormTypes\Details.cshtml" />
@@ -401,6 +403,11 @@
     <Content Include="Views\DesktopReviews\Details.cshtml" />
     <Content Include="Views\DesktopReviews\Edit.cshtml" />
     <Content Include="Views\DesktopReviews\Index.cshtml" />
+    <Content Include="Views\SiteVisitReports\Create.cshtml" />
+    <Content Include="Views\SiteVisitReports\Delete.cshtml" />
+    <Content Include="Views\SiteVisitReports\Details.cshtml" />
+    <Content Include="Views\SiteVisitReports\Edit.cshtml" />
+    <Content Include="Views\SiteVisitReports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\KML\" />
@@ -409,6 +416,7 @@
     <Folder Include="Views\Data\" />
     <Folder Include="Views\FieldData\" />
     <Folder Include="Views\Kmls\" />
+    <Folder Include="Views\RawData\" />
     <Folder Include="Views\RData\" />
     <Folder Include="Views\SearchTypes\" />
     <Folder Include="Views\SuperAdmin\" />
@@ -424,6 +432,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201506032122363_initial.resx">
       <DependentUpon>201506032122363_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506041609138_1.resx">
+      <DependentUpon>201506041609138_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,7 +27,7 @@ function getRawData() {
 }
 
 function onRawDataSuccess(response) {
-    console.log(response);
+    //console.log(response);
     // Clear 
     rawMarkers = [];
     rawDataList = response;
@@ -61,11 +61,13 @@ function showDetails(marker, data) {
     });
     
 }
-
+var currentFormID = -1;
 function displayInWindow2(response) {
+    currentFormID = -1;
     if (response != null) {
         // Set current detailed data
         currentDetailData = response;
+        getImages(response.SiteVisitReportID, "SiteVisit");
         // Empty list first
         $("#coordList").empty();
         $("#imageList").empty();
@@ -75,12 +77,12 @@ function displayInWindow2(response) {
         // Set ID in form
         $('#ID').val(response.ID);
 
-        if (isSA) {
-            $('#SAControl').show();
-            $('#edit_data').attr('href', "fielddata/edit/" + response.ID);
-            $('#delete_data').attr('href', "fielddata/delete/" + response.ID);
 
+        if (isSA != null && isSA === "Yes") {
+            $("#downloadDiv").append('<a href="/sitevisitreports/edit/' + response.SiteVisitReportID + '" class="btn btn-primary">Edit</a>');
+            
         }
+        
 
         // Got data, Display it
         var images = new Object();
@@ -92,18 +94,13 @@ function displayInWindow2(response) {
                 //alert(key + " -> " + response[key]);
                 var value = response[key];
                 if (value != null) {
-                    if (key.toLowerCase() === "inspection date") {
+                    if (key.toLowerCase() === "date") {
                         try{
-                            var td = new Date();
-
-                            var millsec = value.substring(value.indexOf("(") + 1, value.indexOf(")"));
-                            td.setTime(millsec);
-
-                            value = td.getFullYear() + "-" + (td.getMonth()+1) + "-" + (td.getDate()+1);
+                            value = convertMilliToDate(value);
                         }catch(error){}
                     }
 
-                    if (key.toLowerCase().indexOf("photo") == -1) {
+                    if (key.toLowerCase().indexOf("photo") == -1 && key != "FacilityType" && key != "ReviewSite") {
                         if(key.indexOf("UserName") == -1){
                             if (rst == 1) {
                                 $("#coordList").append("<tr class='mTableStyle'><td>" + key + " </td><td>" + value + "</td></tr>");
@@ -137,5 +134,59 @@ function displayImages2(theImages) {
             }
         }
 
+    }
+}
+
+function clearRawMarker() {
+    if (rawMarkers != null) {
+        for(var i=0;i<rawMarkers.length;i++){
+            rawMarkers[i].setMap(null);
+        }
+
+        rawMarkers = [];
+
+    }
+}
+
+function convertMilliToDate(value) {
+    var td = new Date();
+
+    var millsec = value.substring(value.indexOf("(") + 1, value.indexOf(")"));
+    td.setTime(millsec);
+
+    value = td.getFullYear() + "-" + (td.getMonth() + 1) + "-" + (td.getDate() + 1);
+
+    return value;
+}
+
+function getImages(formID, formType) {
+    if (formID != -1 && formType != null) {
+        $.getJSON("/rawdata/images",
+
+            {
+                formID : formID,
+                formType : formType
+            },
+
+            function (response) {
+                
+                if (response != null) {
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        var imgUrl = response[i].Path;
+                        if (imgUrl != null && imgUrl.length > 0) {
+                            $("#imageList")
+                                .append('<img src="'
+                                + imgUrl + '" class="img-responsive"><br />'
+                                + '<span>' + ((response[i].Description != null) ? response[i].Description : "") + '</span>');
+                        }
+
+                    }   
+
+                }
+
+
+            });
     }
 }

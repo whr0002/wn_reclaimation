@@ -165,7 +165,7 @@ namespace wn_web.Controllers.Reclaimation
         }
 
         [HttpPost]
-        public async Task SiteVisitSubmit(FormCollection fc, [Bind(Include="NumberOfImages")]int NumberOfImages,[Bind(Include="SiteVisitReportID,ReviewSiteID,FacilityTypeName,Date,Username,Group,Client,RefusePF,RefuseComment,DrainagePF,DrainageComment,RockGravelPF,RockGravelComment,BareGroundPF,BareGroundComment,SoilStabilityPF,SoilStabilityComment,ContoursPF,ContoursComment,CWDPF,CWDComment,ErosionPF,ErosionComment,SoilCharPF,SoilCharComment,TopsoilDepthPF,TopsoilDepthComment,RootingPF,RootingComment,WSDPF,WSDComment,TreeHealthPF,TreeHealthComment,WeedsInvasivesPF,WeedsInvasivesComment,NSCPF,NSCComment,LitterPF,LitterComment,Recommendation,ReviewSite,FacilityType")]SiteVisitReport svr)
+        public async Task SiteVisitSubmit(FormCollection fc, [Bind(Include="NumberOfImages")]int NumberOfImages,[Bind(Include="SiteVisitReportID,ReviewSiteID,FacilityTypeName,Date,Username,Group,Client,RefusePF,RefuseComment,DrainagePF,DrainageComment,RockGravelPF,RockGravelComment,BareGroundPF,BareGroundComment,SoilStabilityPF,SoilStabilityComment,ContoursPF,ContoursComment,CWDPF,CWDComment,ErosionPF,ErosionComment,SoilCharPF,SoilCharComment,TopsoilDepthPF,TopsoilDepthComment,RootingPF,RootingComment,WSDPF,WSDComment,TreeHealthPF,TreeHealthComment,WeedsInvasivesPF,WeedsInvasivesComment,NSCPF,NSCComment,LitterPF,LitterComment,Recommendation,ReviewSite,FacilityType, Latitude, Longitude")]SiteVisitReport svr)
         {
             if (Request != null)
             {

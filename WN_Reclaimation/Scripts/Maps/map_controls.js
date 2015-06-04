@@ -391,8 +391,13 @@ function markerSelectionChanged() {
                     extractJSON(i, value);
                     
                 } else {
+
                     if (value != null && value != "") {
                         var keyLower = key.toLowerCase();
+
+                        if (keyLower.indexOf("date") > -1) {
+                            value = convertMilliToDate(value);
+                        }
 
                         if (keyLower === "siteid" || key.indexOf("ID") == -1) {
 

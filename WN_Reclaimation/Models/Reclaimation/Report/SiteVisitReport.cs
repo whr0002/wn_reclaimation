@@ -23,6 +23,8 @@ namespace wn_web.Models.Reclaimation.Report
 
         public string Client { get; set; }
 
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public string RefusePF { get; set; }
         public string RefuseComment { get; set; }

@@ -5,7 +5,7 @@ app.controller('SiteVisitController', ['$scope', '$http', function ($scope, $htt
 
     $scope.rawDataTypes = [
         { name: 'Desktop Review', selected: true, url: '/Data/CoordinatesD' },
-        { name: 'Site Visit', selected: false, url: '/rawdata/sitevisit' },
+        { name: 'Site Visit', selected: false, url: '/rawdata/sitevisit', action: '/RawData/SiteVisitReport' , formType: "SiteVisit"},
         { name: 'Site Prep', selected: false },
         { name: 'Vegetation Control', selected: false },
         { name: 'Revegetation', selected: false }
@@ -21,7 +21,7 @@ app.controller('SiteVisitController', ['$scope', '$http', function ($scope, $htt
                 });
             } else {
                 $http.get(type.url).success(function (data) {
-                    onRawDataSuccess(data);
+                    onRawDataSuccess(data, type);
                 });
             }
 

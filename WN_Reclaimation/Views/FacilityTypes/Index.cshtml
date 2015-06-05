@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WN_Reclaimation.Models.FacilityType>
+﻿@model IEnumerable<wn_web.Models.Reclaimation.FacilityType>
 
 @{
     ViewBag.Title = "Index";
@@ -11,21 +11,19 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FacilityTypeName)
-        </th>
         <th></th>
+        <th>@Html.DisplayNameFor(model => model.FacilityTypeName)</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FacilityTypeName)
+            @Html.ActionLink("Edit", "Edit", new { id=item.FacilityTypeName }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FacilityTypeName }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FacilityTypeName })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FacilityTypeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FacilityTypeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FacilityTypeID })
+            @Html.DisplayFor(modelItem => item.FacilityTypeName)
         </td>
     </tr>
 }

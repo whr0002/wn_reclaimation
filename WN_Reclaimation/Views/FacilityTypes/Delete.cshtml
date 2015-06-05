@@ -1,4 +1,4 @@
-﻿@model WN_Reclaimation.Models.FacilityType
+﻿@model wn_web.Models.Reclaimation.FacilityType
 
 @{
     ViewBag.Title = "Delete";
@@ -11,14 +11,6 @@
     <h4>FacilityType</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FacilityTypeName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FacilityTypeName)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm()) {

@@ -285,16 +285,20 @@
                         </div>
 
                     </div>*@
+
+                <hr />
+
+                @if (ViewBag.isSA != null)
+                {
+                    <div class="col-md-12">
+                        <a href="/tutorial" class="btn btn-primary">Create a desktop review</a>
+                    </div>
+                }
+                
                 <hr />
 
                 <h1>Details</h1>
                 <div id="detailDiv" class="row">
-                    @if (ViewBag.isSA != null)
-                    {
-                        <div class="col-md-12">
-                            <a href="/tutorial" class="btn btn-primary">Create</a>
-                        </div>
-                    }
                     
                     @using (Html.BeginForm("ShowOnNewTab", "Data", FormMethod.Post, new { target = "_blank" }))
                     {
@@ -305,17 +309,9 @@
 
 
                     }
-                    @using (Html.BeginForm("DisplayDetails", "Data", FormMethod.Post, new { target = "_blank" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary()
-                        <div id="detailsDiv" class="col-md-12">
-                        </div>
 
-
-                    }
-
-
+                    <div id="detailsDiv" class="col-md-12"></div>
+                  
                 </div>
 
                 <div class="row mCusRow">

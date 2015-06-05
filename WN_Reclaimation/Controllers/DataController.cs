@@ -360,30 +360,12 @@ namespace wn_web.Controllers
 
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ViewResult ShowOnNewTab(string tabid)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ViewResult ShowOnNewTab(int tabid)
         {
-            Record record = getRecord(tabid);
-            if (record.CLIENT.Equals("CNRL"))
-            {
-                ViewBag.Logo = "/Content/Logos/cnrl_logo120.jpg";
-            }
-            else if (record.CLIENT.Equals("APACHE"))
-            {
-                ViewBag.Logo = "/Content/Logos/apache_logo_57.jpg";
-            }
-            else
-            {
-                ViewBag.Logo = "";
-            }
 
-
-            //return new ViewAsPdf(record)
-            //{
-            //    PageSize = Size.A4
-            //};
-            return View(record);
+            return View();
 
         }
 
@@ -391,25 +373,8 @@ namespace wn_web.Controllers
         [ValidateAntiForgeryToken]
         public ViewResult DisplayDetails(int ID)
         {
-
-            var data = db.FieldDatas.Where(s => s.ID == ID).FirstOrDefault();
-            string client = data.Group;
-
-            if (client.Equals("CNRL"))
-            {
-                ViewBag.Logo = "/Content/Logos/cnrl_logo120.jpg";
-            }
-            else if (client.Equals("APACHE"))
-            {
-                ViewBag.Logo = "/Content/Logos/apache_logo_57.jpg";
-            }
-            else
-            {
-                ViewBag.Logo = "Unknown";
-            }
-
-
-            return View(data);
+            
+            return View();
 
         }
 

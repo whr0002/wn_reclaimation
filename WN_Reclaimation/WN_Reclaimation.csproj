@@ -195,6 +195,7 @@
     <Compile Include="Controllers\RawDataController.cs" />
     <Compile Include="Controllers\Reclaimation\DesktopReviewsController.cs" />
     <Compile Include="Controllers\Reclaimation\ErrorController.cs" />
+    <Compile Include="Controllers\Reclaimation\FacilityTypesController.cs" />
     <Compile Include="Controllers\Reclaimation\FormTypesController.cs" />
     <Compile Include="Controllers\Reclaimation\RDataController.cs" />
     <Compile Include="Controllers\Reclaimation\Report\PhotosController.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="Models\Reclaimation\ProvincialArea.cs" />
     <Compile Include="Models\Reclaimation\ProvincialAreaType.cs" />
     <Compile Include="Models\Reclaimation\RelevantCriteria.cs" />
+    <Compile Include="Models\Reclaimation\ReportViewModels.cs" />
     <Compile Include="Models\Reclaimation\Report\FormType.cs" />
     <Compile Include="Models\Reclaimation\Report\Photo.cs" />
     <Compile Include="Models\Reclaimation\Report\SiteVisitReport.cs" />
@@ -288,6 +290,7 @@
     <Content Include="Content\Logos\scari.png" />
     <Content Include="Content\map.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\print.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -408,6 +411,7 @@
     <Content Include="Views\SiteVisitReports\Details.cshtml" />
     <Content Include="Views\SiteVisitReports\Edit.cshtml" />
     <Content Include="Views\SiteVisitReports\Index.cshtml" />
+    <Content Include="Views\RawData\SiteVisitReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\KML\" />
@@ -416,7 +420,6 @@
     <Folder Include="Views\Data\" />
     <Folder Include="Views\FieldData\" />
     <Folder Include="Views\Kmls\" />
-    <Folder Include="Views\RawData\" />
     <Folder Include="Views\RData\" />
     <Folder Include="Views\SearchTypes\" />
     <Folder Include="Views\SuperAdmin\" />

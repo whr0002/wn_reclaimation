@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using wn_web.Models;
+using wn_web.Models.Reclaimation;
 using wn_web.Models.Reclaimation.Report;
 
 namespace WN_Reclaimation.Controllers
@@ -73,6 +74,27 @@ namespace WN_Reclaimation.Controllers
             }
 
             return null;
+        }
+
+            
+        public ViewResult SiteVisitReport(int? ID)
+        {
+            if (ID != null) { 
+
+                SiteVisitReport report = db.SiteVisitReports.Find(ID);
+                List<Photo> photos = db.Photos.Where(w => w.FormID == ID && w.FormTypeName.Equals("SiteVisit")).ToList();
+
+                if (report != null) { 
+                    
+                    ReviewSite common = db.ReviewSites.Where(w => w.ReviewSiteID.Equals(report.ReviewSiteID)).FirstOrDefault();
+                }
+                ViewBag.report = report;
+                ViewBag.photos = photos;
+                ViewBag.common = common;
+
+            }
+            return View();
+
         }
 
         private string getUserRole()

@@ -26,8 +26,8 @@ function getRawData() {
 
 }
 
-function onRawDataSuccess(response) {
-    //console.log(response);
+function onRawDataSuccess(response, type) {
+    console.log(type);
     // Clear 
     rawMarkers = [];
     rawDataList = response;
@@ -41,7 +41,7 @@ function onRawDataSuccess(response) {
         var marker = new google.maps.Marker(markerOptions);
 
         // Set onclick listener
-        showDetails(marker,response[i]);
+        showDetails(marker,response[i], type);
 
 
         rawMarkers.push(marker);
@@ -55,31 +55,35 @@ function onRawDataSuccess(response) {
     }
 }
 
-function showDetails(marker, data) {
+function showDetails(marker, data, type) {
     google.maps.event.addListener(marker, 'click', function (e) {
-        displayInWindow2(data);
+        displayInWindow2(data, type);
     });
     
 }
 var currentFormID = -1;
-function displayInWindow2(response) {
+function displayInWindow2(response, type) {
     currentFormID = -1;
     if (response != null) {
-        // Set current detailed data
+
+        // Set current detailed data      
+        var reportID = response.SiteVisitReportID;
         currentDetailData = response;
-        getImages(response.SiteVisitReportID, "SiteVisit");
+        getImages(reportID, type.formType);
+        
         // Empty list first
         $("#coordList").empty();
         $("#imageList").empty();
         $("#downloadDiv").empty();
         $("#detailsDiv").empty();
-        $("#detailsDiv").append('<input type="hidden" name="ID" id="ID" /><input type="submit" value="Show on new tab" class="btn btn-primary"/>');
+        //$("#detailsDiv").append('<form action="'+type.action+'" method="get" target="_blank"><input type="hidden" name="ID" id="ID"/><input type="submit" value="Show on new tab" class="btn btn-primary"/></form>');
+        $("#detailsDiv").append('<a href="'+ type.action + '?ID=' + reportID + '" target= "_blank" class="btn btn-primary">Show on new tab</a>');
         // Set ID in form
-        $('#ID').val(response.ID);
+        //$('#ID').val(reportID);
 
 
         if (isSA != null && isSA === "Yes") {
-            $("#downloadDiv").append('<a href="/sitevisitreports/edit/' + response.SiteVisitReportID + '" class="btn btn-primary">Edit</a>');
+            $("#downloadDiv").append('<a href="/sitevisitreports/edit/' + reportID + '" class="btn btn-primary">Edit</a>');
             
         }
         

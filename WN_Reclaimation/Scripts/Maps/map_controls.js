@@ -354,7 +354,7 @@ function markerSelectionChanged() {
     var currentDetailData;
     function displayInWindow(response) {
         if (response != null) {
-
+            console.log(response);
             // Set current detailed data
             currentDetailData = response;
             // Empty list first
@@ -362,7 +362,7 @@ function markerSelectionChanged() {
             $("#imageList").empty();
             $("#downloadDiv").empty();
             $("#detailsDiv").empty();
-            $("#downloadDiv").append('<a href="/desktopreviews/edit/' + response["Part1"]["DesktopReviewID"] + '" class="btn btn-primary">Edit</a>');
+            $("#downloadDiv").append('<a href="/desktopreviews/edit/' + response["Part1"]["Desktop Review ID"] + '" class="btn btn-primary" target="_blank">Edit</a>');
 
 
             // Got data, Display it
@@ -379,39 +379,42 @@ function markerSelectionChanged() {
         }
     }
 
-    // Recursively parse JSON objects
+// Recursively parse JSON objects
     function extractJSON(i, response) {
         for (var key in response) {
+            
             var rst = i % 2;
             if (response.hasOwnProperty(key)) {
 
                 var value = response[key];
-                if (typeof value == 'object') {
-                    i++;
-                    extractJSON(i, value);
+                if (typeof value == 'object' && key.indexOf("Part") > -1) {
+                    // disable this part temporaryly
+                    i = extractJSON(i, value);
                     
                 } else {
 
-                    if (value != null && value != "") {
+                    if (value != null && value != "" && typeof value != 'object') {
                         var keyLower = key.toLowerCase();
 
                         if (keyLower.indexOf("date") > -1) {
                             value = convertMilliToDate(value);
                         }
 
-                        if (keyLower === "siteid" || key.indexOf("ID") == -1) {
-
-                            if (rst == 1) {
-                                $("#coordList").append("<tr class='mTableStyle'><td>" + key + " </td><td>" + value + "</td></tr>");
-                            } else {
-                                $("#coordList").append("<tr><td>" + key + " </td><td>" + value + "</td></tr>");
-                            }
-                            i++;
+                        
+                        console.log("Position: " + i + " | Key: " + key);
+                        if (rst == 1) {
+                            $("#coordList").append("<tr class='mTableStyle'><td>" + key + " </td><td>" + value + "</td></tr>");
+                        } else {
+                            $("#coordList").append("<tr><td>" + key + " </td><td>" + value + "</td></tr>");
                         }
+                        i++;
+                        
                     }
                 }
             }
         }
+
+        return i;
     }
 
     function displayImages(theImages) {

@@ -8,7 +8,7 @@ namespace wn_web.Models
 {
     public class ClientLogo
     {
-        private static Hashtable ht;
+        
         private string clientName;
         public ClientLogo(string clientName)
         {

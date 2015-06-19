@@ -139,7 +139,7 @@ namespace WN_Reclaimation.Controllers.Reclaimation.Report
             if(blob.Exists())
                 blob.Delete();
             }
-            catch (Exception e) { }
+            catch { }
 
         }
 

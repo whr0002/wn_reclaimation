@@ -61,6 +61,9 @@
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -287,7 +290,7 @@
     <Content Include="Content\Images\marker_orange.png" />
     <Content Include="Content\Images\marker_purple.png" />
     <Content Include="Content\Images\Woodlands_icon.jpg" />
-    <Content Include="Content\Logos\scari.png" />
+    <Content Include="Content\Logos\rrr.png" />
     <Content Include="Content\map.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\print.css" />

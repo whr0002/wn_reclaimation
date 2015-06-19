@@ -62,12 +62,13 @@ function showDetails(marker, data, type) {
     
 }
 var currentFormID = -1;
+var hash = {};
 function displayInWindow2(response, type) {
     currentFormID = -1;
     if (response != null) {
-
+        console.log(response);
         // Set current detailed data      
-        var reportID = response.SiteVisitReportID;
+        var reportID = response["Site Visit Report ID"];
         currentDetailData = response;
         getImages(reportID, type.formType);
         
@@ -89,46 +90,63 @@ function displayInWindow2(response, type) {
         
 
         // Got data, Display it
-        var images = new Object();
-        var i = 1;
-        for (var key in response) {
-            var rst = i % 2;
-
-            if (response.hasOwnProperty(key)) {
-                //alert(key + " -> " + response[key]);
-                var value = response[key];
-                if (value != null) {
-                    if (key.toLowerCase() === "date") {
-                        try{
-                            value = convertMilliToDate(value);
-                        }catch(error){}
-                    }
-
-                    if (key.toLowerCase().indexOf("photo") == -1 && key != "FacilityType" && key != "ReviewSite") {
-                        if(key.indexOf("UserName") == -1){
-                            if (rst == 1) {
-                                $("#coordList").append("<tr class='mTableStyle'><td>" + key + " </td><td>" + value + "</td></tr>");
-                            } else {
-                                $("#coordList").append("<tr><td>" + key + " </td><td>" + value + "</td></tr>");
-                            }
-                            i++;
-                        }
-                    } else {
-                        images[key] = value;
-                    }
-
-                }
-            }
-
-        }
+        hash = {};
+        extractJSON2(1, response);
 
         // Display images
-        displayImages2(images);
+        //displayImages2(images);
 
     } else {
         alert("No Data");
     }
 }
+
+// Recursively parse JSON objects
+
+function extractJSON2(i, response) {
+    for (var key in response) {
+
+        if (hash[key] == 1) {
+            continue;
+        } else {
+            hash[key] = 1;
+        }
+
+
+        var rst = i % 2;
+        if (response.hasOwnProperty(key)) {
+
+            var value = response[key];
+            if (typeof value == 'object') {
+                // disable this part temporaryly
+                i = extractJSON(i, value);
+
+            } else {
+
+                if (value != null && value != "" && typeof value != 'object') {
+                    var keyLower = key.toLowerCase();
+
+                    if (keyLower.indexOf("date") > -1) {
+                        value = convertMilliToDate(value);
+                    }
+
+
+                    console.log("Position: " + i + " | Key: " + key);
+                    if (rst == 1) {
+                        $("#coordList").append("<tr class='mTableStyle'><td>" + key + " </td><td>" + value + "</td></tr>");
+                    } else {
+                        $("#coordList").append("<tr><td>" + key + " </td><td>" + value + "</td></tr>");
+                    }
+                    i++;
+
+                }
+            }
+        }
+    }
+
+    return i;
+}
+
 
 function displayImages2(theImages) {
     for (var key in theImages) {

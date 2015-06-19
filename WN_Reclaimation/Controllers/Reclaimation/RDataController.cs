@@ -16,6 +16,7 @@ using System.Data.Entity;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
 
 
 
@@ -61,16 +62,20 @@ namespace wn_web.Controllers.Reclaimation
 
                         if (role != null)
                         {
-                            if (role.Equals("super admin")) {
+                            if (role.Equals("super admin") || role.Equals("WOODN")){
 
                                 //var drs = data.DesktopReviews.ToList();
-                                var rss = db.ReviewSites.ToList();
+                                var rss = (from i in db.ReviewSites
+                                           select new
+                                           {
+                                               ReviewSiteID = i.ReviewSiteID
+                                           }).OrderBy(order => order.ReviewSiteID).ToList();
                                 var fts = db.FacilityTypes.ToList();
 
                                 var o = new { RS = rss, FT = fts };
 
 
-                                string json = new JavaScriptSerializer().Serialize(Json(o, JsonRequestBehavior.AllowGet).Data);
+                                string json = JsonConvert.SerializeObject(o);
                                 Response.Write(json);
                             }
                             else

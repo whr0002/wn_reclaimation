@@ -464,7 +464,7 @@ namespace wn_web.Controllers
             {
                 return Convert.ToDateTime(d);
             }
-            catch (Exception e)
+            catch
             {
                 
                 return null;
@@ -479,7 +479,7 @@ namespace wn_web.Controllers
             {
                 return (double)d;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

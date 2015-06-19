@@ -99,7 +99,7 @@ namespace wn_web.Controllers
 
             //return Json(row, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult OneRowD(int id)
+        public ActionResult OneRowD(int id)
         {
             OneRowViewModel o = new OneRowViewModel();
             DesktopReview v = null;
@@ -116,17 +116,18 @@ namespace wn_web.Controllers
 
                         o.Part1 = v;
                         o.Part2 = r;
-                        return Json(o, JsonRequestBehavior.AllowGet);
+                        return Content(JsonConvert.SerializeObject(o), "application/json");
                     }
                 }
                 else
                 {
                     v = db.DesktopReviews.Where(w => w.DesktopReviewID == id && w.Client.Equals(role)).FirstOrDefault();
+                    return Content(JsonConvert.SerializeObject(v), "application/json");
                 }
             }
 
 
-            return Json(v, JsonRequestBehavior.AllowGet);
+            return Content("", "applicatoin/json");
         }
         [HttpPost]
         public void PostPositions(string data)
@@ -193,9 +194,9 @@ namespace wn_web.Controllers
 
 
             }
-            catch (Exception e)
+            catch
             {
-                Response.Write(e);
+                
             }
         }
 
@@ -600,7 +601,7 @@ namespace wn_web.Controllers
 
                         return Coordinates(query, null);
                     }
-                    catch (Exception e)
+                    catch
                     {
 
                     }
@@ -742,7 +743,7 @@ namespace wn_web.Controllers
 
 
                                 }
-                                catch (Exception e)
+                                catch
                                 {
                                     // Exceptions when parse Date
                                 }

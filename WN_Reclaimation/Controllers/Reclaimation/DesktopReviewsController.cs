@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using wn_web.Models;
+using PagedList;
+using PagedList.Mvc;
 using wn_web.Models.Reclaimation;
 
 namespace WN_Reclaimation.Controllers.Reclaimation
@@ -16,10 +18,13 @@ namespace WN_Reclaimation.Controllers.Reclaimation
         private wn_webContext db = new wn_webContext();
 
         // GET: DesktopReviews
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var desktopReviews = db.DesktopReviews.Include(d => d.FacilityType).Include(d => d.Landscape).Include(d => d.LSDQuarter).Include(d => d.RelevantCriteria).Include(d => d.Site).Include(d => d.Soil).Include(d => d.Vegetation);
-            return View(desktopReviews.ToList());
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(desktopReviews.OrderByDescending(o => o.DesktopReviewID).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: DesktopReviews/Details/5

@@ -20,35 +20,27 @@ namespace wn_web.Controllers
         public ActionResult Index()
         {
             ApplicationDbContext context = new ApplicationDbContext();
-            
-            
+
+
             string currentUserId = User.Identity.GetUserId();
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            List<Kml> kmls = new List<Kml>();
+            //List<Kml> kmls = new List<Kml>();
 
-            setDropdowns();
+            //setDropdowns();
             List<string> roles = new List<string>();
-            roles = userManager.GetRoles(currentUserId) as List<string>;
-            if (roles.Count() > 0)
-            {
-                if (userManager.IsInRole(currentUserId, "super admin"))
+            if (currentUserId != null) { 
+                roles = userManager.GetRoles(currentUserId) as List<string>;
+                if (roles.Count() > 0)
                 {
-                    ViewBag.isSA = "Yes";
-                    kmls = kContext.Kmls.OrderBy(o => o.Name).Where(w => !w.Name.Contains(".zip")).ToList();
-                }
-                else
-                {
-                    var role = roles[0];
-                    kmls = kContext
-                        .Kmls
-                        .OrderBy(o => o.Name)
-                        .Where(k => k.Client.Equals(role, 
-                            StringComparison.CurrentCultureIgnoreCase) && !k.Name.Contains(".zip"))
-                        .ToList();
+                    if (userManager.IsInRole(currentUserId, "super admin"))
+                    {
+                        ViewBag.isSA = "Yes";
+                    }
+
                 }
             }
-            return View(kmls);
+            return View();
             
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace WN_Reclaimation.Controllers
         private wn_webContext db = new wn_webContext();
         private ApplicationDbContext context = new ApplicationDbContext();
 
-        public JsonResult SiteVisit()
+        public ActionResult SiteVisit()
         {        
 
             //var data = from sv in db.SiteVisitReports
@@ -39,17 +40,17 @@ namespace WN_Reclaimation.Controllers
             {
                 if (role.Equals("super admin")) { 
                     var data = db.SiteVisitReports.ToList();
-                    return Json(data, JsonRequestBehavior.AllowGet);
+                    return Content(JsonConvert.SerializeObject(data), "application/json");
                 }
                 else
                 {
                     var data = db.SiteVisitReports.Where(w => w.Group.Equals(role, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                    return Json(data, JsonRequestBehavior.AllowGet);
+                    return Content(JsonConvert.SerializeObject(data), "application/json");
                 }
             }
-            
 
-            return Json(null, JsonRequestBehavior.AllowGet);
+
+            return Content("", "application/json");
         }
 
         public JsonResult Images(int formID, string formType)
@@ -87,10 +88,12 @@ namespace WN_Reclaimation.Controllers
                 if (report != null) { 
                     
                     ReviewSite common = db.ReviewSites.Where(w => w.ReviewSiteID.Equals(report.ReviewSiteID)).FirstOrDefault();
+
+                    ViewBag.report = report;
+                    ViewBag.photos = photos;
+                    ViewBag.common = common;
                 }
-                ViewBag.report = report;
-                ViewBag.photos = photos;
-                ViewBag.common = common;
+
 
             }
             return View();

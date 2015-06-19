@@ -1,5 +1,9 @@
-﻿@model IEnumerable<wn_web.Models.Reclaimation.DesktopReview>
+﻿@*@model IEnumerable<wn_web.Models.Reclaimation.DesktopReview>*@
+@model PagedList.IPagedList<wn_web.Models.Reclaimation.DesktopReview>
+@using PagedList;
+@using PagedList.Mvc;
 
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
 }
@@ -12,121 +16,121 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FacilityType.FacilityTypeName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().FacilityType.FacilityTypeName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Landscape.LandscapeName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Landscape.LandscapeName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LSDQuarter.AspectName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LSDQuarter.AspectName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RelevantCriteria.RelevantCriteriaName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RelevantCriteria.RelevantCriteriaName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SiteID)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SiteID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Soil.SoilName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Soil.SoilName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Vegetation.VegetationName)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Vegetation.VegetationName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Notes)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Notes)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Client)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Client)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ApprovalStatus)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ApprovalStatus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WorkPhase)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkPhase)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Occupant)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Occupant)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OccupantInfo)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().OccupantInfo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoilClass)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SoilClass)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoilGroup)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SoilGroup)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ERCBLic)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ERCBLic)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Width)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Width)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Length)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Length)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AreaHA)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AreaHA)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AreaAC)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AreaAC)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Northing)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Northing)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Easting)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Easting)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Latitude)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Latitude)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Longitude)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Longitude)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Elevation)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Elevation)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LSD)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LSD)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SurveyDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SurveyDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConstructionDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ConstructionDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SpudDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SpudDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AbandonmentDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AbandonmentDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReclamationDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ReclamationDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RCADate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RCADate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RCNumber)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RCNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DSAComments)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DSAComments)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Exemptions)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Exemptions)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmendDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AmendDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmendDetail)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AmendDetail)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RevegDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RevegDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RevegDetail)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RevegDetail)
         </th>
         <th></th>
     </tr>
@@ -259,3 +263,8 @@
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",   new { page }))
+

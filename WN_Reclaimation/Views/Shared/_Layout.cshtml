@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - SCARI</title>
+    <title>@ViewBag.Title - Woodlands North RRR</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("mapjs", required: false)
     @RenderSection("mapcss", required: false)
     @RenderSection("print", required: false)
 
-    <meta name="description" content="Stream Classification & Aquatic Resource Inventory" />
+    <meta name="description" content="Reclamation" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,13 +22,12 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @*<img src="~/Content/Logos/scari.png" id="wn-logo" class="img-responsive" />*@
+                <img src="~/Content/Logos/rrr.png" id="wn-logo" class="img-responsive" />
                 @*@Html.ActionLink("Woodlands North", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
